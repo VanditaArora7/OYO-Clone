@@ -1,33 +1,44 @@
 'use client'
+
+import Link from 'next/link'
+import { useState } from 'react'
+
 const Header3 = () => {
+  const [city, setcity] = useState(' ') //If user does not search anything then city will be empty and it will be redirected to blank
   return (
     <div className="bg-gradient-to-r from-red-600 to-red-400 h-60">
       <div className="mx-10 p-5">
         <h2 className="font-bold text-white text-4xl text-center ">
           Over 157,000 hotels and homes across 35 countries
         </h2>
-        <div className="grid grid-cols-5 my-5 mx-10">
+        <div className="flex justify-center my-5 mx-10">
           <input
             type="text"
             placeholder="Search.."
-            className="h-16 ouline-none px-3 text-lg border-r-2 border-gray-400 col-span-2"
+            className="w-full h-16 ouline-none px-3 text-lg border-r-2 border-gray-400 "
+            onChange={(e) => {
+              setcity(e.target.value)
+            }}
           />
-          <input
-            type="text"
-            placeholder="Search.."
-            className="h-16 ouline-none px-3 text-lg border-r-2 border-gray-400 col-span-1"
-          />
-          <input
-            type="text"
+          {/* <input
+            type="date"
             placeholder="Search.."
             className="h-16 ouline-none px-3 text-lg border-r-2 border-gray-400 col-span-1"
           />
-          <button
-            type="submit"
-            className="h-16 px-3 py-2 col-span-1 bg-green-400 hover:cursor-pointer hover:bg-green-600 text-white "
-          >
-            Search
-          </button>
+          <input
+            type="date"
+            placeholder="Search.."
+            className="h-16 ouline-none px-3 text-lg border-r-2 border-gray-400 col-span-1"
+          /> */}
+
+          <Link href={`/hotels?city=${city}`}>
+            <button
+              type="submit"
+              className="h-16 w-40 px-3 py-2  bg-green-400 hover:cursor-pointer hover:bg-green-600 text-white "
+            >
+              Search
+            </button>
+          </Link>
         </div>
         <div className="flex mx-20 my-5 font-bold">
           <button
