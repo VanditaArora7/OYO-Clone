@@ -1,7 +1,34 @@
 import Image from 'next/image'
 import Block from './Block'
+import Link from 'next/link'
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
 
 const Header1 = () => {
+  const [auth, setauth] = useState(false)
+
+  useEffect(() => {
+    const key = Cookies.get('user')
+    if (key) {
+      setauth(true)
+      return
+    }
+    setauth(false)
+  }, [auth])
+
+  const router = useRouter()
+
+  // if (typeof window !== 'undefined') {
+  //   auth = Cookies.get('user')
+  // }
+
+  const handleLogout = () => {
+    Cookies.remove('user')
+    setauth(false)
+    router.push('/')
+  }
+
   return (
     <div className="flex justify-between items-center border-b-2 border-gray-300  h-24 px-5">
       <div>
@@ -37,12 +64,24 @@ const Header1 = () => {
         />
         <div className="flex items-center pl-3">
           <Image
+            alt="Some Image"
             src={'/demo.svg'}
             width={200}
             height={200}
             className="w-10 h-10 rounded-full mr-5"
           />
-          <h3 className="font-bold">Login/Signup</h3>
+          {auth ? (
+            <h3
+              className="font-bold hover:cursor-pointer"
+              onClick={handleLogout}
+            >
+              Logout
+            </h3>
+          ) : (
+            <Link href={'/login'}>
+              <h3 className="font-bold hover:cursor-pointer">Login/Signup</h3>
+            </Link>
+          )}
         </div>
       </div>
     </div>
